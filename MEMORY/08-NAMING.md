@@ -1,0 +1,1 @@
+../NAMING_REGISTRY.md

@@ -18,6 +18,7 @@ Read in order:
 - [ ] 03-ORCHESTRATION.md
 - [ ] 04-IMPROVEMENT.md
 - [ ] 07-PACKAGES.md
+- [ ] 08-NAMING.md
 
 ## Step 2: Check Health (1 min)
 
@@ -39,9 +40,10 @@ Proceed with planned work, following ORCHESTRATION_FRAMEWORK.md.
 ## Step 5: Update Memory (1 min)
 
 - [ ] Update 07-PACKAGES.md if scores changed
+- [ ] Update 08-NAMING.md if names changed
 - [ ] Update 06-API_MODERNIZATION.md if old APIs found
 - [ ] Commit all memory changes
 
 ---
 
-**Total startup time: ~6 minutes. Prevents hours of rework.**
+**Total startup time: ~7 minutes. Prevents hours of rework.**
