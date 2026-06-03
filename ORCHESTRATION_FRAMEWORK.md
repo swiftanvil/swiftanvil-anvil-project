@@ -154,15 +154,42 @@ Every child follows this exact sequence. **No skipping steps. No faking reviews.
 5. Verify plan items are addressed
 6. Write `Children/{id}/REVIEW-IMPL.md` containing the ACTUAL reviewer output
 
+**MANDATORY — Cross-Host Review Capture Protocol**
+
+The builder MUST capture the reviewer's FULL output. Truncated output is useless — the verdict may be lost.
+
+```bash
+# ALWAYS redirect to a file. Never rely on terminal buffer.
+# The '>' captures stdout+stderr; '2>&1' ensures nothing is lost.
+
+codex review - < /tmp/review_prompt.md > /tmp/reviewer_output.txt 2>&1 &
+# Wait for completion, then read the file:
+cat /tmp/reviewer_output.txt
+
+# If the file is huge, tail the end where the verdict lives:
+tail -100 /tmp/reviewer_output.txt
+```
+
+**Why file capture is mandatory:**
+- Terminal buffers truncate long output (observed with Codex CLI on macOS)
+- Background execution (`&`) prevents the builder session from hanging
+- The file can be read back in chunks if it exceeds context limits
+- The file serves as the permanent artifact for `REVIEW-IMPL.md`
+
+**If the reviewer's output is truncated even in the file:**
+1. Try a shorter prompt (summarize source instead of full code)
+2. Try requesting the verdict in the first paragraph of the prompt
+3. Try a different reviewer model
+4. Document the truncation in `STATUS.md` and proceed with available output
+
 **MANDATORY — Before writing REVIEW-IMPL.md, the builder must:**
 
 ```bash
 # 1. Try Claude
-codex review "Review <package> for implementation quality..." > reviewer-output.txt 2>&1
-# OR: claude -p "Review <package>..."
+claude -p "Review <package>..." > /tmp/reviewer_output.txt 2>&1
 
-# 2. If Claude fails, try Codex
-codex review "Review <package> for implementation quality..." > reviewer-output.txt 2>&1
+# 2. If Claude fails or truncates, try Codex
+codex review - < /tmp/review_prompt.md > /tmp/reviewer_output.txt 2>&1
 
 # 3. If both fail, document all attempts in STATUS.md, then self-review
 ```
@@ -428,6 +455,7 @@ The reviewer evaluates against these criteria regardless of which model they are
 | 3.0 | 2026-06-03 | Formalized 5-step per-child workflow, phase gates, file structure |
 | 3.1 | 2026-06-03 | Hardened reviewer-unavailable procedure, banned false-positive approvals, enforced honest review provenance |
 | 3.2 | 2026-06-03 | Added REVIEW-PROVENANCE.md requirement, post-merge review lineage tracking, provenance table format |
+| 3.3 | 2026-06-03 | Hardened cross-host review capture protocol — file redirection mandatory, truncation handling, background execution |
 
 ---
 
