@@ -258,26 +258,40 @@ This record is copied into `REVIEW-PROVENANCE.md` at merge time.
 
 After a child is merged / pushed, purge stale artifacts to prevent disk bloat and confusion in future sessions.
 
+**iFoundation repo cleanup:**
 ```bash
-# Run from the package directory
 rm -rf .build/                    # Swift build artifacts
-cd ../.. && rm -rf Packages/      # Local package clones (re-clone fresh next session)
-rm -f /tmp/reviewer_output.txt    # Reviewer capture files
-rm -f /tmp/review_*.txt           # Prompt artifacts
-rm -f /tmp/*.bundle               # Git bundles
-rm -rf /tmp/tmp.*                 # Temporary directories left by reviewers
+rm -rf Packages/                  # Local package clones (re-clone fresh next session)
+```
+
+**System-wide cleanup:**
+```bash
+# Reviewer temp files
+rm -f /tmp/reviewer_output.txt /tmp/review_*.txt /tmp/review-*.txt
+rm -f /tmp/*.bundle /tmp/codex-review*.txt /tmp/claude-review*.txt
+rm -rf /tmp/tmp.* /tmp/codex-objects-*
+
+# Xcode DerivedData (stale project builds >2 days old)
+find ~/Library/Developer/Xcode/DerivedData -maxdepth 1 -type d -mtime +2 \
+  \( -name "Turnip-*" -o -name "UserIdentity-*" -o -name "Rooms-*" \
+     -o -name "Unsaved_*" -o -name "swiftanvil-*" \) -exec rm -rf {} +
+
+# iStudio worktree .build directories (if not actively developing)
+find ~/Documents/v-i-s-h-a-l/github/iStudio-worktrees -maxdepth 2 -type d -name ".build" -exec rm -rf {} +
 ```
 
 **What NOT to delete:**
 - `Children/{id}/` — permanent planning artifacts
 - `RESULT.md`, `REVIEW-PROVENANCE.md` — review lineage
 - Git remote repos (already pushed)
+- Active DerivedData for projects you're currently working on
 
 **Why this matters:**
 - `.build/` directories can grow to 500MB+ per package
 - Stale `Packages/` clones confuse the next session about which source is canonical
 - Reviewer temp files accumulate in `/tmp/` across sessions
-- Worktrees and derived data create false positives in searches
+- DerivedData can grow to 100GB+ with stale project folders
+- Worktree `.build` dirs bloat inactive branches
 
 **Output:** Clean working directory with only tracked orchestration files.
 
