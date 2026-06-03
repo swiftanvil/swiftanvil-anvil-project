@@ -10,6 +10,8 @@
 |-------|-------|--------|----------|
 | [Phase 1](#phase-1-foundation) | Foundation | 🟢 Complete | 5/5 |
 | [Phase 2](#phase-2-core-packages) | Core Packages | 🟡 In Progress | 1/3 |
+
+**Phase 2 Progress:** Child 2.1 (AnvilNetwork) ✅ complete. Ready for Child 2.2 (FeatureFlags) or Child 2.3 (Developer Menu).
 | [Phase 3](#phase-3-cli--integration) | CLI & Integration | ⚪ Planned | 0/5 |
 | [Phase 4](#phase-4-ecosystem) | Ecosystem | ⚪ Planned | 0/3 |
 
@@ -122,8 +124,8 @@
 | Source | Designed from scratch |
 | Core Types | `HTTPClient`, `HTTPRequestBuilder`, `HTTPResponse`, `HTTPTransport`, `NetworkError`, `HTTPResponseCache`, `RetryConfiguration` |
 | Platforms | iOS 16+, macOS 13+, tvOS 16+, watchOS 9+, visionOS 1+ |
-| Tests | 14/14 pass |
-| Review | ⏳ Pending (Claude cross-host) |
+| Tests | 29/29 pass |
+| Review | ✅ Approved (Claude cross-host, 2 rounds) |
 
 **Key design decisions:**
 - `HTTPClient` = `Sendable` struct wrapping `actor HTTPClientCore` for safe concurrent access
@@ -224,9 +226,9 @@ Homebrew tap, Swift Package Index listing, release automation.
 | A11yIdentifiers | 17/17 | 2026-06-02 |
 | BenchmarkKit | 78/78 | 2026-06-02 |
 | AppStrings | 21/21 | 2026-06-02 |
-| AnvilNetwork | 14/14 | 2026-06-02 |
+| AnvilNetwork | 29/29 | 2026-06-02 |
 | iFoundation CLI | 8/8 | 2026-06-02 |
-| **Total** | **138/138** | **100%** |
+| **Total** | **152/152** | **100%** |
 
 ---
 
