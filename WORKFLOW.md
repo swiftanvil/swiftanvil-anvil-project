@@ -89,6 +89,37 @@ Sometimes a change affects multiple packages (e.g., shared API pattern):
 - Delete your branch
 - Update `ROADMAP.md` if this completes a milestone
 - Tag a release if this is a user-facing change
+- **Record review provenance** (see Post-Merge Review Provenance below)
+
+---
+
+## 📋 Post-Merge Review Provenance
+
+After every PR is merged, the merger MUST record the sibling host review status for both **planning** and **implementation** phases. This is appended to the PR description or recorded in `Children/{id}/REVIEW-PROVENANCE.md`.
+
+### Review Provenance Table
+
+| Phase | Reviewer | Model | Verdict | Rounds | Key Findings |
+|-------|----------|-------|---------|--------|--------------|
+| **Plan** | Codex CLI | GPT-5.5 | APPROVED_WITH_NOTES | 3 | TestTarget layout, atomic writes, destination semantics |
+| **Impl** | Codex CLI | GPT-5.5 | NEEDS_REVISION → APPROVED_WITH_NOTES | 2 | Product/type mismatch, test-target deps, identifier sanitization |
+
+### Rules
+
+1. **Who reviewed:** The actual CLI tool used (`claude review`, `codex review`, etc.)
+2. **What model:** The model version (GPT-5.5, Claude 4, etc.)
+3. **Verdict:** APPROVED / APPROVED_WITH_NOTES / NEEDS_REVISION / SELF-REVIEWED
+4. **Rounds:** How many review cycles (1 = first pass approved, 2+ = revisions needed)
+5. **Key findings:** Bullet list of what the reviewer found (even for APPROVED)
+6. **If self-reviewed:** Document ALL failed cross-host attempts in `STATUS.md` first
+
+### Where to Record
+
+| Location | When |
+|----------|------|
+| PR description | Append provenance table before merge |
+| `Children/{id}/REVIEW-PROVENANCE.md` | If PR spans multiple children |
+| `ROADMAP.md` child entry | Always include review line |
 
 ---
 
@@ -255,7 +286,9 @@ git tag -d 1.2.0
 | `ROADMAP.md` | After each phase/child completes | Kimi |
 | `CHECKLIST.md` | After each task completes | Kimi |
 | `Children/{id}/RESULT.md` | After child execution | Kimi |
-| `Children/{id}/REVIEW.md` | After cross-host review | Claude |
+| `Children/{id}/REVIEW-PLAN.md` | After cross-host plan review | Reviewer model |
+| `Children/{id}/REVIEW-IMPL.md` | After cross-host impl review | Reviewer model |
+| `Children/{id}/REVIEW-PROVENANCE.md` | After PR merge | Merger |
 | GitHub Releases | After version tags | Automated |
 
 ---
@@ -271,4 +304,4 @@ git tag -d 1.2.0
 
 ---
 
-*Last updated: 2026-06-02*
+*Last updated: 2026-06-03*

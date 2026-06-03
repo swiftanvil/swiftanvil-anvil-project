@@ -185,6 +185,22 @@ codex review "Review <package> for implementation quality..." > reviewer-output.
 
 **Output:** `Children/{id}/REVIEW-IMPL.md` (or `REVIEW-IMPL-v{N}.md` for re-reviews) — must contain actual reviewer output
 
+**Review Provenance Record:**
+
+After the implementation review completes (regardless of verdict), record:
+
+```markdown
+| Aspect | Value |
+|--------|-------|
+| Reviewer CLI | codex review / claude review / etc. |
+| Model | GPT-5.5 / Claude 4 / etc. |
+| Verdict | APPROVED / APPROVED_WITH_NOTES / NEEDS_REVISION |
+| Rounds | N (1 = first pass, 2+ = revisions needed) |
+| Builder | Kimi / Claude / etc. |
+```
+
+This record is copied into `REVIEW-PROVENANCE.md` at merge time.
+
 ---
 
 ### Step 5: DOCUMENT (Primary Builder)
@@ -206,6 +222,7 @@ codex review "Review <package> for implementation quality..." > reviewer-output.
 
 **Output:**
 - `Children/{id}/RESULT.md`
+- `Children/{id}/REVIEW-PROVENANCE.md` (review lineage record)
 - Updated `ROADMAP.md`
 - Updated `CHECKLIST.md`
 - Code pushed to GitHub
@@ -213,9 +230,41 @@ codex review "Review <package> for implementation quality..." > reviewer-output.
 **CRITICAL — Pre-commit checklist:**
 - [ ] `REVIEW-IMPL.md` exists in `Children/{id}/`
 - [ ] `REVIEW-IMPL.md` contains actual reviewer output (not just builder's opinion)
+- [ ] `REVIEW-PROVENANCE.md` exists with plan + impl review lineage
 - [ ] If self-reviewed: `STATUS.md` documents ALL failed reviewer attempts
 - [ ] ROADMAP.md review line is honest about who reviewed what
 - [ ] Never claim "Claude reviewed" if Claude was down and you self-reviewed
+
+**REVIEW-PROVENANCE.md Template:**
+
+```markdown
+# Review Provenance: Child {id} — {Name}
+
+## Plan Review
+
+| Field | Value |
+|-------|-------|
+| Reviewer | Codex CLI / Claude CLI / etc. |
+| Model | GPT-5.5 / Claude 4 / etc. |
+| Verdict | APPROVED / APPROVED_WITH_NOTES / NEEDS_REVISION |
+| Rounds | N |
+| Key Findings | Bullet list |
+
+## Implementation Review
+
+| Field | Value |
+|-------|-------|
+| Reviewer | Codex CLI / Claude CLI / etc. |
+| Model | GPT-5.5 / Claude 4 / etc. |
+| Verdict | APPROVED / APPROVED_WITH_NOTES / NEEDS_REVISION |
+| Rounds | N |
+| Key Findings | Bullet list |
+
+## Builder
+
+- Primary: Kimi / Claude / etc.
+- Session: {session-id}
+```
 
 ---
 
@@ -378,6 +427,7 @@ The reviewer evaluates against these criteria regardless of which model they are
 | 2.0 | 2026-06-02 | Agent-agnostic rewrite, model rotation rules |
 | 3.0 | 2026-06-03 | Formalized 5-step per-child workflow, phase gates, file structure |
 | 3.1 | 2026-06-03 | Hardened reviewer-unavailable procedure, banned false-positive approvals, enforced honest review provenance |
+| 3.2 | 2026-06-03 | Added REVIEW-PROVENANCE.md requirement, post-merge review lineage tracking, provenance table format |
 
 ---
 
