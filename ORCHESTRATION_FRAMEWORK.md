@@ -254,6 +254,33 @@ This record is copied into `REVIEW-PROVENANCE.md` at merge time.
 - Updated `CHECKLIST.md`
 - Code pushed to GitHub
 
+**CRITICAL — Post-merge cleanup (Step 5b):**
+
+After a child is merged / pushed, purge stale artifacts to prevent disk bloat and confusion in future sessions.
+
+```bash
+# Run from the package directory
+rm -rf .build/                    # Swift build artifacts
+cd ../.. && rm -rf Packages/      # Local package clones (re-clone fresh next session)
+rm -f /tmp/reviewer_output.txt    # Reviewer capture files
+rm -f /tmp/review_*.txt           # Prompt artifacts
+rm -f /tmp/*.bundle               # Git bundles
+rm -rf /tmp/tmp.*                 # Temporary directories left by reviewers
+```
+
+**What NOT to delete:**
+- `Children/{id}/` — permanent planning artifacts
+- `RESULT.md`, `REVIEW-PROVENANCE.md` — review lineage
+- Git remote repos (already pushed)
+
+**Why this matters:**
+- `.build/` directories can grow to 500MB+ per package
+- Stale `Packages/` clones confuse the next session about which source is canonical
+- Reviewer temp files accumulate in `/tmp/` across sessions
+- Worktrees and derived data create false positives in searches
+
+**Output:** Clean working directory with only tracked orchestration files.
+
 **CRITICAL — Pre-commit checklist:**
 - [ ] `REVIEW-IMPL.md` exists in `Children/{id}/`
 - [ ] `REVIEW-IMPL.md` contains actual reviewer output (not just builder's opinion)
@@ -494,6 +521,7 @@ Do NOT update for:
 | 3.2 | 2026-06-03 | Added REVIEW-PROVENANCE.md requirement, post-merge review lineage tracking, provenance table format |
 | 3.3 | 2026-06-03 | Hardened cross-host review capture protocol — file redirection mandatory, truncation handling, background execution |
 | 3.4 | 2026-06-04 | Added Framework Self-Improvement section — builder has autonomy to update workflow when execution reveals genuine improvements |
+| 3.5 | 2026-06-04 | Added Post-merge cleanup step — purge stale artifacts, temp files, derived data, and local package clones after merge |
 
 ---
 
