@@ -98,6 +98,47 @@ struct ValidationTests {
         }
     }
     
+    @Test("rejects library product referencing executable target")
+    func libraryProductReferencesExecutableTarget() async {
+        let spec = ProjectSpec(
+            name: "MyApp",
+            products: [.init(name: "MyApp", type: .library, targets: ["MyTool"])],
+            targets: [.init(name: "MyTool", type: .executableTarget)]
+        )
+        let url = URL(fileURLWithPath: "/test/BadProdType")
+        await #expect(throws: ProjectError.invalidProduct("product 'MyApp' is a library but references executable target 'MyTool'")) {
+            try await generator().generate(spec: spec, at: url)
+        }
+    }
+    
+    @Test("rejects executable product referencing regular target")
+    func executableProductReferencesRegularTarget() async {
+        let spec = ProjectSpec(
+            name: "MyApp",
+            products: [.init(name: "MyApp", type: .executable, targets: ["MyLib"])],
+            targets: [.init(name: "MyLib", type: .target)]
+        )
+        let url = URL(fileURLWithPath: "/test/BadProdType2")
+        await #expect(throws: ProjectError.invalidProduct("product 'MyApp' is an executable but references non-executable target 'MyLib'")) {
+            try await generator().generate(spec: spec, at: url)
+        }
+    }
+    
+    @Test("rejects non-test target depending on test target")
+    func nonTestTargetDependsOnTestTarget() async {
+        let spec = ProjectSpec(
+            name: "MyApp",
+            targets: [
+                .init(name: "MyApp", type: .target, dependencies: [.byName("MyAppTests")]),
+                .init(name: "MyAppTests", type: .testTarget)
+            ]
+        )
+        let url = URL(fileURLWithPath: "/test/BadDep")
+        await #expect(throws: ProjectError.invalidProduct("target 'MyApp' cannot depend on test target 'MyAppTests'")) {
+            try await generator().generate(spec: spec, at: url)
+        }
+    }
+    
     @Test("rejects duplicate products")
     func duplicateProducts() async {
         let spec = ProjectSpec(
@@ -317,6 +358,20 @@ struct GenerationTests {
         
         let source = await fs.content(at: url.appendingPathComponent("Sources/MyLib/library.swift"))!
         #expect(source.contains("public struct MyLib"))
+    }
+    
+    @Test("sanitizes hyphens in Swift identifiers")
+    func sanitizesHyphensInIdentifiers() async throws {
+        let spec = ProjectSpec(
+            name: "My-Lib",
+            targets: [.init(name: "My-Lib", type: .target, sources: ["library"])]
+        )
+        let url = URL(fileURLWithPath: "/test/My-Lib")
+        try await generator().generate(spec: spec, at: url)
+        
+        let source = await fs.content(at: url.appendingPathComponent("Sources/My-Lib/library.swift"))!
+        #expect(source.contains("public struct My_Lib"))
+        #expect(!source.contains("public struct My-Lib"))
     }
     
     @Test("escapes strings in Package.swift")

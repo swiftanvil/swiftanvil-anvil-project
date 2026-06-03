@@ -130,6 +130,24 @@ public struct ProjectGenerator: Sendable {
             }
         }
         
+        // Product type must match referenced target kinds
+        let targetTypeByName = Dictionary(uniqueKeysWithValues: spec.targets.map { ($0.name, $0.type) })
+        for product in spec.products {
+            for targetName in product.targets {
+                guard let targetType = targetTypeByName[targetName] else { continue }
+                switch product.type {
+                case .library:
+                    if targetType == .executableTarget {
+                        throw ProjectError.invalidProduct("product '\(product.name)' is a library but references executable target '\(targetName)'")
+                    }
+                case .executable:
+                    if targetType != .executableTarget {
+                        throw ProjectError.invalidProduct("product '\(product.name)' is an executable but references non-executable target '\(targetName)'")
+                    }
+                }
+            }
+        }
+        
         // Duplicate product names
         let productNames = spec.products.map(\.name)
         let duplicateProducts = Dictionary(grouping: productNames, by: { $0 }).filter { $0.value.count > 1 }.keys
@@ -152,6 +170,10 @@ public struct ProjectGenerator: Sendable {
                 case .byName(let name):
                     guard targetNameSet.contains(name) else {
                         throw ProjectError.missingTarget("target '\(target.name)' depends on unknown target '\(name)'")
+                    }
+                    // Non-test targets cannot depend on test targets
+                    if target.type != .testTarget, testTargetNames.contains(name) {
+                        throw ProjectError.invalidProduct("target '\(target.name)' cannot depend on test target '\(name)'")
                     }
                 case .product(_, let package):
                     guard dependencyPackageNames.contains(package) else {
@@ -281,7 +303,8 @@ public struct ProjectGenerator: Sendable {
     
     private func renderTemplate(_ templateString: String, name: String) throws -> String {
         let template = try Template(templateString)
-        return try template.render(context: ["name": name])
+        let swiftIdentifier = name.sanitizedForSwiftIdentifier
+        return try template.render(context: ["name": swiftIdentifier])
     }
     
     private func packageName(from url: String) -> String {
@@ -303,5 +326,10 @@ extension String {
             .replacingOccurrences(of: "\"", with: "\\\"")
             .replacingOccurrences(of: "\n", with: "\\n")
             .replacingOccurrences(of: "\t", with: "\\t")
+    }
+    
+    /// Sanitizes this string for use as a Swift identifier by replacing invalid characters.
+    var sanitizedForSwiftIdentifier: String {
+        self.replacingOccurrences(of: "-", with: "_")
     }
 }
