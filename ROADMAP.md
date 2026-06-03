@@ -10,7 +10,7 @@
 |-------|-------|--------|----------|
 | [Phase 1](#phase-1-foundation) | Foundation | 🟢 Complete | 5/5 |
 | [Phase 2](#phase-2-core-packages) | Core Packages | 🟢 Complete | 3/3 |
-| [Phase 3](#phase-3-cli--integration) | CLI & Integration | 🟡 In Progress | 3/5 |
+| [Phase 3](#phase-3-cli--integration) | CLI & Integration | 🟡 In Progress | 4/5 |
 | [Phase 4](#phase-4-ecosystem) | Ecosystem | ⚪ Planned | 0/3 |
 
 **Phase 2 Progress:** All children complete. Ready for Phase Gate 2→3.
@@ -245,11 +245,30 @@
 - Non-test targets cannot depend on test targets
 - Swift identifier sanitization in templates (hyphens→underscores)
 
-### 3.4 Documentation Generator
+### 3.4 Documentation Generator ✅
 
-`swiftanvil docs generate` — generates DocC documentation across all packages with custom theme.
+| Aspect | Detail |
+|--------|--------|
+| Repo | `swiftanvil-anvil-docs` (ready for push) |
+| Source | Built from scratch |
+| Core Types | `DocumentationGenerator`, `TargetDiscovery`, `CatalogGenerator`, `DocCToolLocator`, `ProcessRunner`, `DocumentationLogger` |
+| Platforms | macOS 13+ |
+| Tests | 13/13 pass |
+| Review | ✅ APPROVED_WITH_NOTES (Codex CLI GPT-5.5, 1 round, 4 issues fixed) |
 
-**Moved from Phase 2.4** — documentation is a tooling concern, not a runtime package.
+**What it does:**
+- Single-package DocC generation (symbol graph → catalog → `docc convert` → `.doccarchive`)
+- Aggregate documentation for multi-package catalogs with HTML landing page
+- Static hosting transformation (`docc process-archive transform-for-static-hosting`)
+- Target filtering (include/exclude) and custom target path support
+
+**Key fixes from review:**
+- P1: Replaced synchronous pipe reading with `PipeDataActor` to prevent deadlock on large output
+- P2: Landing page now links to `.doccarchive/` instead of bare package directory
+- P2: `hostingBasePath` is now applied via static hosting transform per package
+- P2: `CatalogGenerator` respects custom `path` from `Package.swift` via `TargetDiscovery`
+
+**Dependencies:** `AnvilTemplate` (remote)
 
 ### 3.5 Testing & Verification
 
@@ -330,7 +349,7 @@ Homebrew tap, Swift Package Index listing, release automation.
 
 ---
 
-*Last updated: 2026-06-03*
+*Last updated: 2026-06-04*
 
 ---
 
@@ -339,7 +358,7 @@ Homebrew tap, Swift Package Index listing, release automation.
 - [x] Child 3.1: Wizard System
 - [x] Child 3.2: Template Engine
 - [x] Child 3.3: Project Generator
-- [ ] Child 3.4: Documentation Generator
+- [x] Child 3.4: Documentation Generator
 - [ ] Child 3.5: Testing & Verification
 
 ---
