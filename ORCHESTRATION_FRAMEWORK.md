@@ -540,3 +540,21 @@ Do NOT update for:
 ---
 
 *Framework is model-agnostic. Any capable LLM can be builder or reviewer. The only rule: they must be different.*
+
+**Stale branch cleanup:**
+
+```bash
+# List all branches (local and remote)
+git branch -a
+
+# Delete local branches that were merged
+git branch --merged main | grep -v "^\* main$" | xargs -r git branch -d
+
+# Delete remote branches that were merged (use with caution)
+git fetch --prune origin
+
+# Force-delete unmerged branches (only if abandoned)
+git branch -D <branch-name>
+```
+
+**Rule:** Only `main` should remain after merge. Feature branches, review branches, and temp branches must be deleted once their code is in `main`.
