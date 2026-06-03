@@ -58,7 +58,7 @@ These apply to **all** SwiftAnvil packages when minimum OS rises.
 
 1. Discover old API during code review or audit
 2. Add row to this file with status ⏳
-3. Create improvement item in `.improvement/score.json`
+3. Create improvement item in `package.improvement-score`
 4. Schedule during next cleanup sprint
 5. Update status to ✅ when done
 

@@ -41,7 +41,7 @@ Every package gets a score from 0-100. The score is calculated automatically fro
 
 ### Score Persistence
 
-Each package's score lives in its repo at `.improvement/score.json`:
+Each package's score lives in its repo at `package.improvement-score`:
 
 ```json
 {
@@ -126,7 +126,7 @@ When a trigger fires, the system enters an **Improvement Sprint**.
 ```
 Trigger Fires
 │
-├── 1. Create Improvement Item in .improvement/backlog.md
+├── 1. Create Improvement Item in package.improvement-backlog
 │   └── ID, category, description, impact, effort, deadline
 │
 ├── 2. If score < 80 or P1 found:
@@ -142,16 +142,16 @@ Trigger Fires
 │   └── If score improved → unblock features
 │   └── If score stagnant → escalate to user
 │
-└── 6. Archive item to .improvement/completed.md
+└── 6. Archive item to package.improvement-completed
 ```
 
 ---
 
 ## Per-Repo Improvement Roadmap
 
-Every package repo contains `ROADMAP.md` at its root. This is **not** the org roadmap — it's the package's own improvement trajectory.
+Every package repo contains `roadmap.org` at its root. This is **not** the org roadmap — it's the package's own improvement trajectory.
 
-### Template: `ROADMAP.md` (per package)
+### Template: `roadmap.org` (per package)
 
 ```markdown
 # AnvilTemplate Roadmap
@@ -185,7 +185,7 @@ Every package repo contains `ROADMAP.md` at its root. This is **not** the org ro
 
 ### How the AI Knows What to Work On
 
-The AI reads the package's `ROADMAP.md` and `.improvement/score.json` at session start:
+The AI reads the package's `roadmap.org` and `package.improvement-score` at session start:
 
 1. **If score < 80** → Improvement sprint takes priority over new features
 2. **If any item is marked "blocked"** → Check if blocker is resolved
@@ -216,7 +216,7 @@ The iFoundation repo tracks all packages in one view:
 - AnvilNetwork: Waiting for Swift 6.1 `URLSession` changes
 ```
 
-This lives in `iFoundation/IMPROVEMENT_DASHBOARD.md` and is updated after every child completion.
+This lives in `iFoundation/improvement.dashboard` and is updated after every child completion.
 
 ---
 
@@ -225,9 +225,9 @@ This lives in `iFoundation/IMPROVEMENT_DASHBOARD.md` and is updated after every 
 ### How the Builder Knows What to Improve
 
 At session start, the builder reads:
-1. `iFoundation/IMPROVEMENT_DASHBOARD.md` — what's urgent across all packages
-2. `Packages/swiftanvil/<repo>/ROADMAP.md` — what's next for this package
-3. `Packages/swiftanvil/<repo>/.improvement/score.json` — current health
+1. `iFoundation/improvement.dashboard` — what's urgent across all packages
+2. `Packages/swiftanvil/<repo>/roadmap.org` — what's next for this package
+3. `Packages/swiftanvil/<repo>/package.improvement-score` — current health
 
 **Decision tree:**
 ```
@@ -242,7 +242,7 @@ Is planned child's dependencies score < 80?
 
 ### How the Reviewer Knows What to Check
 
-The reviewer reads the package's `ROADMAP.md` before reviewing:
+The reviewer reads the package's `roadmap.org` before reviewing:
 - Are "Now" items addressed?
 - Did the implementation move the package toward "Next"?
 - Did the PMS improve or regress?
@@ -275,7 +275,7 @@ Schedule sprint? [y/n]
 ## Implementation Plan
 
 ### Phase 1: Scoring (Immediate)
-- [ ] Add `.improvement/` directory to each repo
+- [ ] Add `package.improvement-directory` directory to each repo
 - [ ] Create `score.json` manually for existing packages
 - [ ] Add PMS calculation script to iFoundation
 

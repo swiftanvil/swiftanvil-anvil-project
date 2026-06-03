@@ -1,6 +1,6 @@
 # SwiftAnvil Improvement Dashboard
 
-> Auto-generated from `.improvement/score.json`. Updated after every child completion.
+> Auto-generated from `package.improvement-score`. Updated after every child completion.
 
 *Last updated: 2026-06-04*
 

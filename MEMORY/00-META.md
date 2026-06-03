@@ -10,15 +10,15 @@ last_updated: 2026-06-04
 ## For AI Builders
 
 1. At session start, read files 00-07 in order
-2. Before writing code, read 02-PLATFORM_POLICY.md
-3. Before reviewing, read 03-ORCHESTRATION.md
-4. After completing work, update 07-PACKAGES.md
+2. Before writing code, read policy.platform
+3. Before reviewing, read workflow.orchestration
+4. After completing work, update packages.registry
 
 ## For AI Reviewers
 
-1. Read 02-PLATFORM_POLICY.md — check for violations
-2. Read 05-QUALITY.md — check standards
-3. Read 06-API_MODERNIZATION.md — check for old APIs
+1. Read policy.platform — check for violations
+2. Read quality.standards — check standards
+3. Read modernization.api — check for old APIs
 
 ## For Humans
 

@@ -59,11 +59,11 @@ When dropping an OS version:
 
 - [ ] Update `Package.swift` platform requirements
 - [ ] Update all `#if available` → remove, since minimum is now higher
-- [ ] Update README.md platform badges
+- [ ] Update package.readme platform badges
 - [ ] Update CI matrix (remove old simulators)
 - [ ] Search for deprecated API usage → modernize
 - [ ] Search for workaround comments → remove if Apple fixed
-- [ ] Update `PLATFORM_POLICY.md` current matrix
+- [ ] Update `policy.platform` current matrix
 - [ ] Tag a breaking release (semver major or minor)
 
 ---
@@ -86,7 +86,7 @@ When dropping an OS version, search for and update:
 
 ### How to Track
 
-Every package has `API_MODERNIZATION.md`:
+Every package has `modernization.api`:
 
 ```markdown
 # API Modernization Log — AnvilTemplate
@@ -143,17 +143,17 @@ Checks for:
 Cross-host reviewers must verify:
 - [ ] No `#available` / `@available` in new code
 - [ ] Platforms in `Package.swift` match policy
-- [ ] No deprecated API usage without `API_MODERNIZATION.md` entry
+- [ ] No deprecated API usage without `modernization.api` entry
 - [ ] README badges show correct minimum versions
 
 ### 4. AI Memory
 
-The AI reads `PLATFORM_POLICY.md` at every session start. It is part of the **host-agnostic memory system** (see `MEMORY_SYSTEM.md`).
+The AI reads `policy.platform` at every session start. It is part of the **host-agnostic memory system** (see `meta.memory-system`).
 
 **If AI generates code with old API:**
 - Self-correct during implementation
 - Flag in review if missed
-- Add to `API_MODERNIZATION.md` if discovered later
+- Add to `modernization.api` if discovered later
 
 ---
 
@@ -164,7 +164,7 @@ When the policy changes (e.g., drop iOS 18, add iOS 27):
 ```
 Week 1: Update Package.swift platforms, CI matrix
 Week 2: Remove all #available / @available
-Week 3: Modernize APIs (see API_MODERNIZATION.md)
+Week 3: Modernize APIs (see modernization.api)
 Week 4: Update docs, release notes, tags
 ```
 

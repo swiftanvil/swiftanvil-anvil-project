@@ -141,10 +141,10 @@ When a name changes:
    ```
 3. Replace in priority order:
    - Active source code (Package.swift, Sources/, Tests/)
-   - README.md files
+   - package.readme files
    - GitHub URLs in docs
    - Historical docs (Children/, Composed/) — mark as archived
-4. Update `MEMORY/07-PACKAGES.md`
+4. Update `packages.registry`
 5. Commit with message: `Naming migration: OLD → NEW`
 
 ---
@@ -169,7 +169,7 @@ Reviewer checklist:
 
 ### AI Memory
 
-The AI reads this file at session start (part of `MEMORY/07-PACKAGES.md` or dedicated `MEMORY/08-NAMING.md`).
+The AI reads this file at session start (part of `packages.registry` or dedicated `naming.registry`).
 
 If AI generates code with old names:
 - Self-correct during implementation
@@ -185,7 +185,7 @@ If AI generates code with old names:
 | `ifoundation-*` | `swiftanvil-anvil-*` | ~50 | 🔴 Active drift |
 | `github.com/iFoundation` | `github.com/swiftanvil` | ~20 | 🔴 Active drift |
 
-**Action:** Naming cleanup sprint required. See `PLATFORM_UPGRADE_PLAN.md` for scheduling.
+**Action:** Naming cleanup sprint required. See `upgrade.platform` for scheduling.
 
 ---
 

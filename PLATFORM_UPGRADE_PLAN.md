@@ -7,7 +7,7 @@
 
 ## Why Now
 
-The PLATFORM_POLICY.md (02-PLATFORM_POLICY.md) mandates:
+The policy.platform (policy.platform) mandates:
 - **iOS 18+ minimum** (not 16, not 17)
 - **macOS 15+ minimum** (not 13, not 14)
 - No `#available`, no `@available`, no legacy shims
@@ -52,7 +52,7 @@ platforms: [.iOS(.v18), .macOS(.v15), .tvOS(.v18), .watchOS(.v11), .visionOS(.v2
 ### 5. Documentation
 
 - [ ] Update README badges
-- [ ] Update ROADMAP.md platform line
+- [ ] Update roadmap.org platform line
 - [ ] Update DocC platform annotations
 
 ### 6. Version Bump
@@ -117,9 +117,9 @@ grep -r "@available" Sources/ Tests/ || echo "Clean"
 
 ## Post-Upgrade
 
-- [ ] Update MEMORY/07-PACKAGES.md — mark all as iOS 18+ / macOS 15+
-- [ ] Update IMPROVEMENT_DASHBOARD.md
-- [ ] Update API_MODERNIZATION.md — mark completed items
+- [ ] Update packages.registry — mark all as iOS 18+ / macOS 15+
+- [ ] Update improvement.dashboard
+- [ ] Update modernization.api — mark completed items
 
 ---
 

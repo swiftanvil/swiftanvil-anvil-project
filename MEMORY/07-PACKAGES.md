@@ -7,7 +7,7 @@ last_updated: 2026-06-04
 
 # Package Registry
 
-> Auto-generated from .improvement/score.json. Updated after every child completion.
+> Auto-generated from package.improvement-score. Updated after every child completion.
 
 | Package | Repo | Version | PMS | Grade | Status | Min iOS | Min macOS |
 |---------|------|---------|-----|-------|--------|---------|-----------|

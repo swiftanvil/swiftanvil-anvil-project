@@ -11,7 +11,7 @@ last_updated: 2026-06-04
 
 SwiftAnvil is a suite of Swift packages for building modern Apple platform apps. We prioritize:
 
-1. **Latest OS first** — iOS 18+, macOS 15+, etc. (see 02-PLATFORM_POLICY.md)
+1. **Latest OS first** — iOS 18+, macOS 15+, etc. (see policy.platform)
 2. **Swift 6 strict concurrency** — no exceptions
 3. **Zero dependencies** where possible — pure Swift + Foundation
 4. **Test-driven** — every public API has tests
@@ -19,8 +19,8 @@ SwiftAnvil is a suite of Swift packages for building modern Apple platform apps.
 
 ## What We Don't Do
 
-- Support old OS versions (see 02-PLATFORM_POLICY.md)
-- Use deprecated APIs (see 06-API_MODERNIZATION.md)
+- Support old OS versions (see policy.platform)
+- Use deprecated APIs (see modernization.api)
 - Add dependencies for trivial functionality
 - Skip cross-host review
 - Merge without tests passing

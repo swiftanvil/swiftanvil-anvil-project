@@ -12,13 +12,13 @@ Every session begins here. Do not skip steps.
 ## Step 1: Load Memory (2 min)
 
 Read in order:
-- [ ] 00-META.md
-- [ ] 01-IDENTITY.md
-- [ ] 02-PLATFORM_POLICY.md
-- [ ] 03-ORCHESTRATION.md
-- [ ] 04-IMPROVEMENT.md
-- [ ] 07-PACKAGES.md
-- [ ] 08-NAMING.md
+- [ ] memory.meta
+- [ ] memory.identity
+- [ ] policy.platform
+- [ ] workflow.orchestration
+- [ ] improvement.framework
+- [ ] packages.registry
+- [ ] naming.registry
 
 ## Step 2: Check Health (1 min)
 
@@ -29,19 +29,19 @@ Read in order:
 
 ## Step 3: Plan Work (2 min)
 
-- [ ] Read ROADMAP.md for planned child
+- [ ] Read roadmap.org for planned child
 - [ ] Check if dependencies need updating
 - [ ] Verify platform requirements match policy (iOS 18+, macOS 15+)
 
 ## Step 4: Execute
 
-Proceed with planned work, following ORCHESTRATION_FRAMEWORK.md.
+Proceed with planned work, following workflow.orchestration.
 
 ## Step 5: Update Memory (1 min)
 
-- [ ] Update 07-PACKAGES.md if scores changed
-- [ ] Update 08-NAMING.md if names changed
-- [ ] Update 06-API_MODERNIZATION.md if old APIs found
+- [ ] Update packages.registry if scores changed
+- [ ] Update naming.registry if names changed
+- [ ] Update modernization.api if old APIs found
 - [ ] Commit all memory changes
 
 ---
