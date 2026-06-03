@@ -1,0 +1,73 @@
+{
+  "framework_version": "1.0.0",
+  "org": "swiftanvil",
+  "packages": [
+    {
+      "name": "AnvilTemplate",
+      "repo": "swiftanvil-anvil-template",
+      "version": "1.0.0",
+      "score": 78,
+      "grade": "B",
+      "breakdown": {
+        "correctness": 25,
+        "coverage": 15,
+        "documentation": 12,
+        "api_stability": 15,
+        "performance": 5,
+        "ecosystem": 3,
+        "security": 3
+      },
+      "last_calculated": "2026-06-04T02:30:00Z",
+      "next_review": "2026-06-18T02:30:00Z",
+      "improvement_items": [
+        { "id": "TPL-001", "category": "coverage", "description": "Add tests for nested loop error paths", "impact": 3, "effort": "small", "target_version": "1.1.0" },
+        { "id": "TPL-002", "category": "correctness", "description": "Add .dictionary to TemplateValue", "impact": 8, "effort": "medium", "target_version": "1.1.0" },
+        { "id": "TPL-003", "category": "performance", "description": "Template parse caching", "impact": 5, "effort": "small", "target_version": "1.1.0" }
+      ]
+    },
+    {
+      "name": "AnvilProject",
+      "repo": "swiftanvil-anvil-project",
+      "version": "1.0.0",
+      "score": 82,
+      "grade": "A",
+      "breakdown": {
+        "correctness": 25,
+        "coverage": 18,
+        "documentation": 10,
+        "api_stability": 15,
+        "performance": 5,
+        "ecosystem": 5,
+        "security": 4
+      },
+      "last_calculated": "2026-06-04T02:30:00Z",
+      "next_review": "2026-06-18T02:30:00Z",
+      "improvement_items": [
+        { "id": "PRJ-001", "category": "documentation", "description": "Add advanced usage examples to README", "impact": 3, "effort": "small", "target_version": "1.0.1" }
+      ]
+    },
+    {
+      "name": "AnvilDocs",
+      "repo": "swiftanvil-anvil-docs",
+      "version": "1.0.0",
+      "score": 75,
+      "grade": "B",
+      "breakdown": {
+        "correctness": 23,
+        "coverage": 12,
+        "documentation": 10,
+        "api_stability": 15,
+        "performance": 5,
+        "ecosystem": 5,
+        "security": 5
+      },
+      "last_calculated": "2026-06-04T02:30:00Z",
+      "next_review": "2026-06-11T02:30:00Z",
+      "improvement_items": [
+        { "id": "DOC-001", "category": "correctness", "description": "Use AnvilTemplate for landing page instead of string interpolation", "impact": 5, "effort": "medium", "target_version": "1.1.0", "blocked_by": "TPL-002" },
+        { "id": "DOC-002", "category": "coverage", "description": "Add integration tests with real docc executable", "impact": 5, "effort": "large", "target_version": "1.1.0" },
+        { "id": "DOC-003", "category": "ecosystem", "description": "Add GitHub Actions workflow for doc generation", "impact": 3, "effort": "small", "target_version": "1.0.1" }
+      ]
+    }
+  ]
+}
