@@ -10,7 +10,7 @@
 |-------|-------|--------|----------|
 | [Phase 1](#phase-1-foundation) | Foundation | 🟢 Complete | 5/5 |
 | [Phase 2](#phase-2-core-packages) | Core Packages | 🟢 Complete | 3/3 |
-| [Phase 3](#phase-3-cli--integration) | CLI & Integration | 🟡 In Progress | 1/5 |
+| [Phase 3](#phase-3-cli--integration) | CLI & Integration | 🟡 In Progress | 3/5 |
 | [Phase 4](#phase-4-ecosystem) | Ecosystem | ⚪ Planned | 0/3 |
 
 **Phase 2 Progress:** All children complete. Ready for Phase Gate 2→3.
@@ -204,13 +204,46 @@
 - Terminal raw mode with ISIG disabled (Ctrl-C returns byte, not SIGINT), restored via `defer`
 - Non-interactive mode `.nonInteractive(answers:)` for CI/automation
 
-### 3.2 Template Engine
+### 3.2 Template Engine ✅
 
-Stencil-based template system for generating boilerplate code.
+| Aspect | Detail |
+|--------|--------|
+| Repo | [`swiftanvil-anvil-template`](https://github.com/swiftanvil/swiftanvil-anvil-template) |
+| Source | Designed from scratch |
+| Core Types | `Template`, `TemplateContext`, `TemplateNode`, `TemplateValue`, `TemplateParser`, `TemplateRenderer`, `TemplateError`, `RenderMode` |
+| Platforms | iOS 16+, macOS 13+, tvOS 16+, watchOS 9+, visionOS 1+ |
+| Tests | 30/30 pass |
+| Review | ✅ APPROVED_WITH_NOTES (Codex cross-host, 3 rounds plan + 1 round impl) |
 
-### 3.3 Project Generator
+**Key design decisions:**
+- Lightweight Mustache-like syntax: `{{name}}`, `{{#items}}...{{/items}}`, `{{^empty}}...{{/empty}}`
+- `TemplateValue` enum for type-safe context values (string, bool, int, double, array, dictionary)
+- `RenderMode` for HTML escaping vs raw output
+- No external dependencies — pure Swift implementation
 
-`swiftanvil create app` — generates a full Xcode project with SwiftAnvil packages pre-configured.
+### 3.3 Project Generator ✅
+
+| Aspect | Detail |
+|--------|--------|
+| Repo | [`swiftanvil-anvil-project`](https://github.com/swiftanvil/swiftanvil-anvil-project) |
+| Source | Designed from scratch |
+| Core Types | `ProjectGenerator`, `ProjectSpec`, `ProductSpec`, `DependencySpec`, `TargetSpec`, `Platform`, `ProjectError`, `FileSystem`, `InMemoryFileSystem` |
+| Platforms | iOS 16+, macOS 13+, tvOS 16+, watchOS 9+, visionOS 1+ |
+| Tests | 37/37 pass |
+| Review | ✅ APPROVED_WITH_NOTES (Codex cross-host, 3 rounds plan + 1 round impl + 1 round fixes) |
+
+**Key design decisions:**
+- Declarative `ProjectSpec` — name, platforms, products, dependencies, targets, templates
+- Per-platform version enums prevent invalid combinations at compile time
+- Programmatic `Package.swift` generation (not templates) for precise comma placement
+- `FileSystem` protocol with `InMemoryFileSystem` for fast, isolated tests
+- Atomic writes via temp+move, rollback on any failure
+- Built-in source templates: `library`, `executable`, `test`, `readme`, `gitignore`
+
+**Review fixes:**
+- Product/target type mismatch validation (library→executable, executable→regular)
+- Non-test targets cannot depend on test targets
+- Swift identifier sanitization in templates (hyphens→underscores)
 
 ### 3.4 Documentation Generator
 
@@ -253,8 +286,10 @@ Homebrew tap, Swift Package Index listing, release automation.
 | AnvilFlags | 37/37 | 2026-06-03 |
 | AnvilDevMenu | 16/16 | 2026-06-03 |
 | AnvilWizard | 20/20 | 2026-06-03 |
+| AnvilTemplate | 30/30 | 2026-06-03 |
+| AnvilProject | 37/37 | 2026-06-03 |
 | iFoundation CLI | 8/8 | 2026-06-02 |
-| **Total** | **225/225** | **100%** |
+| **Total** | **262/262** | **100%** |
 
 *Note: iFoundation CLI is the root project scaffolding tool, not a published package. Lives in this repo.*
 
@@ -287,6 +322,8 @@ Homebrew tap, Swift Package Index listing, release automation.
 | AnvilFlags | https://github.com/swiftanvil/swiftanvil-anvil-flags |
 | AnvilDevMenu | https://github.com/swiftanvil/swiftanvil-anvil-devmenu |
 | AnvilWizard | https://github.com/swiftanvil/swiftanvil-anvil-wizard |
+| AnvilTemplate | https://github.com/swiftanvil/swiftanvil-anvil-template |
+| AnvilProject | https://github.com/swiftanvil/swiftanvil-anvil-project |
 | CLI | https://github.com/swiftanvil/swiftanvil-cli |
 | **Workflow Guide** | **WORKFLOW.md** |
 | **Orchestration** | **ORCHESTRATION_FRAMEWORK.md** |
@@ -294,6 +331,16 @@ Homebrew tap, Swift Package Index listing, release automation.
 ---
 
 *Last updated: 2026-06-03*
+
+---
+
+## Phase 3 Progress
+
+- [x] Child 3.1: Wizard System
+- [x] Child 3.2: Template Engine
+- [x] Child 3.3: Project Generator
+- [ ] Child 3.4: Documentation Generator
+- [ ] Child 3.5: Testing & Verification
 
 ---
 
@@ -310,7 +357,7 @@ Homebrew tap, Swift Package Index listing, release automation.
 ## Phase 3 Progress
 
 - [x] Child 3.1: Wizard System
-- [ ] Child 3.2: Template Engine
-- [ ] Child 3.3: Project Generator
+- [x] Child 3.2: Template Engine
+- [x] Child 3.3: Project Generator
 - [ ] Child 3.4: Documentation Generator
 - [ ] Child 3.5: Testing & Verification
