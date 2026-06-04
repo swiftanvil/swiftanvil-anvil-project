@@ -1,13 +1,13 @@
-// iFoundation — Swift Project Scaffolding Tool
+// AnvilProject — Swift Project Scaffolding Tool
 // Host-agnostic, LLM-era project infrastructure for Apple platforms
 
 import ArgumentParser
 import Foundation
 
 @main
-struct iFoundationCommand: AsyncParsableCommand {
+struct AnvilProjectCommand: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
-        commandName: "ifoundation",
+        commandName: "anvil-project",
         abstract: "Swift project scaffolding with architectural enforcement",
         version: "0.1.0",
         subcommands: [
