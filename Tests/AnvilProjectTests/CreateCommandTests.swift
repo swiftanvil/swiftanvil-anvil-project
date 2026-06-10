@@ -1,6 +1,6 @@
+import ArgumentParser
 import Foundation
 import Testing
-import ArgumentParser
 @testable import AnvilProject
 
 @Suite("CreateCommand")

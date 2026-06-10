@@ -72,7 +72,7 @@ struct TemplateErrorTests {
         let encoding = TemplateError.encodingFailed
         let notFound = TemplateError.templateNotFound("test")
         // Just verify they compile and can be created
-        let _ = encoding
-        let _ = notFound
+        _ = encoding
+        _ = notFound
     }
 }

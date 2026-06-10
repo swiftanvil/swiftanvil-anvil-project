@@ -14,7 +14,7 @@ struct AnvilProjectCommand: AsyncParsableCommand {
             CreateCommand.self,
             DoctorCommand.self,
             DocsCommand.self,
-            ImmunityCommand.self,
+            ImmunityCommand.self
         ],
         defaultSubcommand: CreateCommand.self
     )

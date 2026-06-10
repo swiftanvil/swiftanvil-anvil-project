@@ -75,7 +75,7 @@ struct ConfigValueTests {
     @Test("ConfigValue is Sendable")
     func sendable() {
         let value = ConfigValue.string("sendable")
-        let _ = value as Sendable
+        _ = value as Sendable
     }
 }
 
@@ -251,6 +251,6 @@ struct ProjectConfigExtendedTests {
             projectName: "Test",
             options: [:]
         )
-        let _ = config as Sendable
+        _ = config as Sendable
     }
 }

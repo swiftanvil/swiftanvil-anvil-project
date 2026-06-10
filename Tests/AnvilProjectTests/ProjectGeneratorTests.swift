@@ -154,7 +154,7 @@ struct ProjectGeneratorTests {
             projectName: "TestApp",
             options: [
                 "enableLocalization": .bool(true),
-                "targetLanguages": .stringArray(["en", "ja"]),
+                "targetLanguages": .stringArray(["en", "ja"])
             ]
         )
 
